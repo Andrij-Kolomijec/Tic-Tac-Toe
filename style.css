@@ -1,0 +1,32 @@
+:root {
+    --border-definition: 1px solid; 
+}
+
+body {
+    display: flex;
+    height: 98vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: grid;
+    grid-template: repeat(3, 100px) / repeat(3, 100px);
+}
+
+.square.right {
+    border-left: var(--border-definition);
+}
+
+.square.left {
+    border-right: var(--border-definition);
+
+}
+
+.square.top {
+    border-bottom: var(--border-definition);
+}
+
+.square.bottom {
+    border-top: var(--border-definition);
+}
