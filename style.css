@@ -1,32 +1,40 @@
 :root {
-    --border-definition: 1px solid; 
+    --square-borders: 5px solid;
+    --square-dimensions: 150px;
 }
 
 body {
     display: flex;
-    height: 98vh;
+    height: 80vh;
     justify-content: center;
     align-items: center;
+    background-color: aquamarine;
+    font-family: sans-serif;
 }
 
 .container {
     display: grid;
-    grid-template: repeat(3, 100px) / repeat(3, 100px);
+    grid-template: repeat(3, var(--square-dimensions)) / repeat(3, var(--square-dimensions));
+}
+
+.square {
+    font-size: var(--square-dimensions);
+    text-align: center;
+    line-height: var(--square-dimensions);
 }
 
 .square.right {
-    border-left: var(--border-definition);
+    border-left: var(--square-borders);
 }
 
 .square.left {
-    border-right: var(--border-definition);
-
+    border-right: var(--square-borders);
 }
 
 .square.top {
-    border-bottom: var(--border-definition);
+    border-bottom: var(--square-borders);
 }
 
 .square.bottom {
-    border-top: var(--border-definition);
+    border-top: var(--square-borders);
 }
