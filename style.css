@@ -12,7 +12,7 @@ body {
     font-family: sans-serif;
 }
 
-.container {
+#container {
     display: grid;
     grid-template: repeat(3, var(--square-dimensions)) / repeat(3, var(--square-dimensions));
 }
