@@ -2,24 +2,39 @@ function gameBoard() {
     let theBoard = ['','','','','','','','',''];
     let player = 'X';
     const squares = document.querySelectorAll('.square');
+    const text = document.querySelector('h1');
+    const resetButton = document.querySelector('button');
+    resetButton.addEventListener('click', () => {
+        theBoard = ['','','','','','','','',''];
+        squares.forEach((square) => square.textContent = '');
+        player = 'X';
+        text.textContent = `It is ${player}'s turn.`
+    })
     squares.forEach((square) => {
         square.addEventListener('click', e => {
-            if (e.target.textContent === '') {
+            if (e.target.textContent === '' && !checkForWin(theBoard)) {
                 e.target.textContent = player;
                 theBoard[e.target.id] = player + e.target.id;
-                checkForWin(theBoard, player);
-                if (player === 'X') {
-                    player = 'O';
+                if (!checkForWin(theBoard)) {
+                    if (player === 'X') {
+                        player = 'O';
+                    } else {
+                        player = 'X';
+                    }
+                    text.textContent = `It is ${player}'s turn.`
                 } else {
-                    player = 'X';
+                    text.textContent = `${player}s WIN!`;
                 }
                 console.log(theBoard);
+            }
+            if (!theBoard.includes('')) {
+                text.textContent = `It is a DRAW!`;
             }
         })
     })
 }
 
-function checkForWin(theBoard, player) {
+function checkForWin(theBoard) {
     const winningCombos = [
         ['X0','X1','X2'], 
         ['X3','X4','X5'], 
@@ -40,9 +55,11 @@ function checkForWin(theBoard, player) {
     ];
     for (let combo of winningCombos) {
         if (combo.every(item => theBoard.includes(item))) {
-            console.log(`${player}s wins!`);
+            return true;
         }
     }
 }
+
+
 
 gameBoard();
