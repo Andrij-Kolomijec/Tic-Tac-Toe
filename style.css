@@ -23,18 +23,12 @@ body {
     line-height: var(--square-dimensions);
 }
 
-.square.right {
+.center {
+    border-right: var(--square-borders);
     border-left: var(--square-borders);
 }
 
-.square.left {
-    border-right: var(--square-borders);
-}
-
-.square.top {
-    border-bottom: var(--square-borders);
-}
-
-.square.bottom {
+.middle {
     border-top: var(--square-borders);
+    border-bottom: var(--square-borders);
 }
