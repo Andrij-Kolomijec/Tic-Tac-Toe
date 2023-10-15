@@ -14,17 +14,6 @@ body {
     flex-direction: column;
 }
 
-#text {
-
-}
-
-/* #reset > button {
-    height: 8vh;
-    min-width: 10vw;
-    border-radius: 20px;
-    font-size: calc((2vh + 3vw) / 2);
-} */
-
 #container {
     display: grid;
     grid-template: repeat(3, var(--square-dimensions)) / repeat(3, var(--square-dimensions));
@@ -130,14 +119,15 @@ body {
     font-size: 3rem;
     cursor: pointer;
     border-radius: 10px;
-    border: 2px solid black;
+    border: 4px solid black;
     padding: 0.25em 0.5em;
+    background-color: antiquewhite;
 }
 
 #reset > button:hover{
     background-color: black;
-    color: white;
-    border-color: white;
+    color: antiquewhite;
+    border-color: antiquewhite;
 }
 
 #reset.show {
