@@ -14,6 +14,26 @@ body {
     flex-direction: column;
 }
 
+form {
+    display: grid;
+    grid-template: 1fr 1fr / 150px 150px;
+    gap: 20px 100px;
+}
+
+.difficulty,
+.player {
+    background-color: aquamarine;
+    text-align: center;
+    border: 2px solid;
+    border-radius: 20px;
+    padding: 0px 5px;
+}
+
+.difficulty:focus,
+.player:focus {
+    outline: none;
+}
+
 #container {
     display: grid;
     grid-template: repeat(3, var(--square-dimensions)) / repeat(3, var(--square-dimensions));

@@ -9,6 +9,26 @@
     <title>Tic Tac Toe</title>
 </head>
 <body>
+    <div id="header">
+        <form>
+            <input id="player-name-one" class="player" type="text" placeholder="Player 1" value="X">
+            <input id="player-name-two" class="player" type="text" placeholder="Player 2" value="O">
+            <select class="difficulty" id="player-difficulty-one">
+                <option value="human">human</option>
+                <option value="easy">easy</option>
+                <option value="medium">medium</option>
+                <option value="hard">hard</option>
+                <option value="unbeatable">unbeatable</option>
+            </select>
+            <select class="difficulty" id="player-difficulty-two">
+                <option value="human">human</option>
+                <option value="easy">easy</option>
+                <option value="medium">medium</option>
+                <option value="hard">hard</option>
+                <option value="unbeatable">unbeatable</option>
+            </select>
+        </form>
+    </div>
     <div id="container" class="container x">
         <div id="0" class="square top left"></div>
         <div id="1" class="square top center"></div>

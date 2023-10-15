@@ -7,6 +7,60 @@ const winningMessage = document.querySelector('#reset');
 const text = document.querySelector('.text');
 const resetButton = document.querySelector('button');
 
+let playerNameOne = document.querySelector('#player-name-one');
+let playerNameTwo = document.querySelector('#player-name-two');
+let playerDifficultyOne = document.querySelector("#player-difficulty-one");
+let playerDifficultyTwo = document.querySelector("#player-difficulty-two");
+let botsTurn = false;
+
+function handleClick(e) {
+    e.target.classList.add(player);
+    theBoard[e.target.id] = player + e.target.id;
+    if (!theBoard.includes('') && !checkForWin(theBoard)) {
+        showDraw();
+    } else if (!checkForWin(theBoard)) {
+        swapPlayers();
+    } else if (checkForWin(theBoard)) {
+        showWin();
+    }
+    if (botsTurn) {
+        botEasy;
+    }
+}
+
+function botEasy() {
+    let randomNumber = Math.floor(Math.random() * 9);
+    while (theBoard[randomNumber] !== '') {
+        randomNumber = Math.floor(Math.random() * 9);
+    }
+    let randomSquare = document.getElementById(`${randomNumber}`);
+    randomSquare.classList.add(player);
+    randomSquare.removeEventListener('click', handleClick);
+    theBoard[randomSquare.id] = player + randomSquare.id;
+    if (!theBoard.includes('') && !checkForWin(theBoard)) {
+        showDraw();
+    } else if (!checkForWin(theBoard)) {
+        swapPlayers();
+    } else if (checkForWin(theBoard)) {
+        showWin();
+    }
+    botsTurn = !botsTurn;
+}
+
+function gamePlay() {
+    if (playerDifficultyOne.value === 'human' && playerDifficultyTwo.value === 'human') {
+        squares.forEach((square) => {
+            square.addEventListener('click', handleClick, {once : true});
+        })
+    } else if (playerDifficultyOne.value === 'human' && playerDifficultyTwo.value === 'easy') {
+        botsTurn = !botsTurn;
+        squares.forEach((square) => {
+            square.addEventListener('click', handleClick, {once : true});
+            botsTurn();
+        })
+    }
+}
+
 resetButton.addEventListener('click', () => {
     theBoard = ['','','','','','','','',''];
     player = 'x';
@@ -20,36 +74,42 @@ resetButton.addEventListener('click', () => {
     gamePlay();
 })
 
-function handleClick(e) {
-    e.target.classList.add(player);
-    theBoard[e.target.id] = player + e.target.id;
-    if (!theBoard.includes('') && !checkForWin(theBoard)) {
-        winningMessage.classList.add('show');
-        boardContainer.classList.remove('o');
+playerDifficultyOne.addEventListener('change', () => {
+    playerDifficultyOne = document.querySelector("#player-difficulty-one");
+    resetButton.click();
+    console.log(playerDifficultyOne.value);
+})
+
+playerDifficultyTwo.addEventListener('change', () => {
+    playerDifficultyTwo = document.querySelector("#player-difficulty-two");
+    resetButton.click();
+    console.log(playerDifficultyTwo.value);
+})
+
+function swapPlayers() {
+    if (player === 'x') {
         boardContainer.classList.remove('x');
-        text.innerText = `It's a DRAW!`;
-    } else if (!checkForWin(theBoard)) {
-        if (player === 'x') {
-            boardContainer.classList.remove('x');
-            boardContainer.classList.add('o');
-            player = 'o';
-        } else {
-            boardContainer.classList.remove('o');
-            boardContainer.classList.add('x');
-            player = 'x';
-        }
-    } else if (checkForWin(theBoard)) {
-        winningMessage.classList.add('show');
+        boardContainer.classList.add('o');
+        player = 'o';
+    } else {
         boardContainer.classList.remove('o');
-        boardContainer.classList.remove('x');
-        text.innerText = `${(player === 'x') ? 'X' : 'O'}'s WIN!`;
+        boardContainer.classList.add('x');
+        player = 'x';
     }
 }
 
-function gamePlay() {
-    squares.forEach((square) => {
-        square.addEventListener('click', handleClick, {once : true})
-    })
+function showWin() {
+    winningMessage.classList.add('show');
+    boardContainer.classList.remove('o');
+    boardContainer.classList.remove('x');
+    text.innerText = `${(player === 'x') ? playerNameOne.value : playerNameTwo.value} Wins!`;
+}
+
+function showDraw() {
+    winningMessage.classList.add('show');
+    boardContainer.classList.remove('o');
+    boardContainer.classList.remove('x');
+    text.innerText = `It's a Draw!`;
 }
 
 function checkForWin(theBoard) {
