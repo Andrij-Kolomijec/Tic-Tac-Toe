@@ -23,8 +23,8 @@ function handleClick(e) {
     } else if (checkForWin(theBoard)) {
         showWin();
     }
-    if (botsTurn) {
-        botEasy;
+    if (playerDifficultyTwo.value === 'easy' && !checkForWin(theBoard)) {
+        botEasy();
     }
 }
 
@@ -44,21 +44,19 @@ function botEasy() {
     } else if (checkForWin(theBoard)) {
         showWin();
     }
-    botsTurn = !botsTurn;
+    // botsTurn = !botsTurn;
 }
 
 function gamePlay() {
-    if (playerDifficultyOne.value === 'human' && playerDifficultyTwo.value === 'human') {
-        squares.forEach((square) => {
-            square.addEventListener('click', handleClick, {once : true});
-        })
-    } else if (playerDifficultyOne.value === 'human' && playerDifficultyTwo.value === 'easy') {
-        botsTurn = !botsTurn;
-        squares.forEach((square) => {
-            square.addEventListener('click', handleClick, {once : true});
-            botsTurn();
-        })
-    }
+    squares.forEach((square) => {
+        square.addEventListener('click', handleClick, {once : true});
+    })
+    // } else if (playerDifficultyOne.value === 'human' && playerDifficultyTwo.value === 'easy') {
+    //     // botsTurn = !botsTurn;
+    //     squares.forEach((square) => {
+    //         square.addEventListener('click', handleClick, {once : true});
+    //     })
+    // }
 }
 
 resetButton.addEventListener('click', () => {
