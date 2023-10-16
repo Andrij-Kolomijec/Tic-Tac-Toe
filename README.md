@@ -3,4 +3,4 @@
 
 [:arrow_forward: visit here](https://andrij-kolomijec.github.io/Tic-Tac-Toe/)
 
-topics: 
+topics: javascript
