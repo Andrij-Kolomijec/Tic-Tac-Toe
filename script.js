@@ -11,7 +11,7 @@ let playerNameOne = document.querySelector('#player-name-one');
 let playerNameTwo = document.querySelector('#player-name-two');
 let playerDifficultyOne = document.querySelector("#player-difficulty-one");
 let playerDifficultyTwo = document.querySelector("#player-difficulty-two");
-let botsTurn = false;
+let botInterval;
 
 function handleClick(e) {
     e.target.classList.add(player);
@@ -21,42 +21,53 @@ function handleClick(e) {
     } else if (!checkForWin(theBoard)) {
         swapPlayers();
     } else if (checkForWin(theBoard)) {
-        showWin();
+        showResult();
     }
     if (playerDifficultyTwo.value === 'easy' && !checkForWin(theBoard)) {
-        botEasy();
+        setTimeout(botEasy, 200);
+    } else if (playerDifficultyOne.value === 'easy' && playerDifficultyTwo.value === 'human') {
+        setTimeout(botEasy, 200);
     }
 }
 
 function botEasy() {
     let randomNumber = Math.floor(Math.random() * 9);
-    while (theBoard[randomNumber] !== '') {
+    while (theBoard[randomNumber] !== '' && theBoard.includes('')) {
         randomNumber = Math.floor(Math.random() * 9);
     }
     let randomSquare = document.getElementById(`${randomNumber}`);
-    randomSquare.classList.add(player);
-    randomSquare.removeEventListener('click', handleClick);
-    theBoard[randomSquare.id] = player + randomSquare.id;
+    if (!checkForWin(theBoard) && theBoard.includes('')) {
+        randomSquare.classList.add(player);
+        randomSquare.removeEventListener('click', handleClick);
+        theBoard[randomSquare.id] = player + randomSquare.id;
+    }
     if (!theBoard.includes('') && !checkForWin(theBoard)) {
         showDraw();
     } else if (!checkForWin(theBoard)) {
         swapPlayers();
     } else if (checkForWin(theBoard)) {
-        showWin();
+        showResult();
     }
-    // botsTurn = !botsTurn;
 }
+
+function botVsBot() {
+    if (playerDifficultyOne.value === 'easy' && playerDifficultyTwo.value === 'easy') {
+        squares.forEach((square) => square.removeEventListener('click', handleClick));
+        botInterval = setInterval(() => {
+            if (!checkForWin(theBoard) && theBoard.includes('')) {
+                botEasy();
+            } else {
+                clearInterval(botInterval);
+            }
+        }, 1000);
+    }
+}
+
 
 function gamePlay() {
     squares.forEach((square) => {
         square.addEventListener('click', handleClick, {once : true});
     })
-    // } else if (playerDifficultyOne.value === 'human' && playerDifficultyTwo.value === 'easy') {
-    //     // botsTurn = !botsTurn;
-    //     squares.forEach((square) => {
-    //         square.addEventListener('click', handleClick, {once : true});
-    //     })
-    // }
 }
 
 resetButton.addEventListener('click', () => {
@@ -69,6 +80,7 @@ resetButton.addEventListener('click', () => {
         square.classList.remove('o');
         });
     squares.forEach((square) => square.removeEventListener('click', handleClick));
+    clearInterval(botInterval);
     gamePlay();
 })
 
@@ -76,12 +88,20 @@ playerDifficultyOne.addEventListener('change', () => {
     playerDifficultyOne = document.querySelector("#player-difficulty-one");
     resetButton.click();
     console.log(playerDifficultyOne.value);
+    if (playerDifficultyOne.value === 'easy' && playerDifficultyTwo.value === 'easy') {
+        botVsBot();
+    } else if (playerDifficultyOne.value === 'easy' && playerDifficultyTwo.value === 'human') {
+        botEasy();
+    }
 })
 
 playerDifficultyTwo.addEventListener('change', () => {
     playerDifficultyTwo = document.querySelector("#player-difficulty-two");
     resetButton.click();
     console.log(playerDifficultyTwo.value);
+    if (playerDifficultyOne.value === 'easy' && playerDifficultyTwo.value === 'easy') {
+        botVsBot();
+    }
 })
 
 function swapPlayers() {
@@ -96,7 +116,7 @@ function swapPlayers() {
     }
 }
 
-function showWin() {
+function showResult() {
     winningMessage.classList.add('show');
     boardContainer.classList.remove('o');
     boardContainer.classList.remove('x');
